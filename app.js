@@ -1,64 +1,64 @@
-const circleProgress = document.querySelector('.circle-progress');
+const circleProgress = document.querySelector(".circle-progress");
 const numberOfBreaths = document.querySelector(".breath-input");
 const start = document.querySelector(".start");
 const instructions = document.querySelector(".instructions");
-const breathText = document.querySelector(".breath-text");
+const breathsText = document.querySelector(".breaths-text");
 let breathsLeft = 3;
 
-//Observando las respiraciones seleccionadas por el usuario
+// Watching for selected breaths from user
 numberOfBreaths.addEventListener("change", () => {
-    breathsLeft = numberOfBreaths.value;
-    breathText.innerText = breathsLeft;
+  breathsLeft = numberOfBreaths.value;
+  breathsText.innerText = breathsLeft;
 });
 
-//Grow/Shrink Circle
+// Grow/Shrink Circle
 const growCircle = () => {
-    circleProgress.classList.add("circle-grow");
-    setTimeout(() => {
-        circleProgress.classList.remove("circle-grow");
-    }, 8000);
+  circleProgress.classList.add("circle-grow");
+  setTimeout(() => {
+    circleProgress.classList.remove("circle-grow");
+  }, 8000);
 };
 
-//Instrucciones para la respiracion
+// Breathing Instructions
 const breathTextUpdate = () => {
-    breathsLeft--;
-    breathsText.innerText = breathsLeft;
-    instructions.innerText = "Breath in";
+  breathsLeft--;
+  breathsText.innerText = breathsLeft;
+  instructions.innerText = "respira profundamente";
+  setTimeout(() => {
+    instructions.innerText = "mantén la respiración";
     setTimeout(() => {
-        instructions.innerText = "Hold Breath";
-        setTimeout(() => {
-            instructions.innerText = "Exhale Breath Slowly";
-        }, 4000);
+      instructions.innerText = "Exhale despacio hasta vaciar los pulmones...";
     }, 4000);
+  }, 4000);
 };
 
-//Breathing App Function
+// Breathing App Function
 const breathingApp = () => {
-    const breathingAnimtaion = setInterval(() => {
-        if (breathsLeft === 0) {
-            clearInterval(breathingAnimtaion);
-            instructions.innerText = "Breathing session completed. Click Begin to Start another session";
-            start.classList.remove("button-inactive");
-            breathsLeft = numberOfBreaths.value;
-            breathText.innerText = breathsLeft;
-            return;
-        }
-        growCircle();
-        breathTextUpdate();
-    }, 12000);
+  const breathingAnimtaion = setInterval(() => {
+    if (breathsLeft === 0) {
+      clearInterval(breathingAnimtaion);
+      instructions.innerText =
+        "Sesión completa!. Haz click en el botón para inicar una nueva sesión.";
+      start.classList.remove("button-inactive");
+      breathsLeft = numberOfBreaths.value;
+      breathsText.innerText = breathsLeft;
+      return;
+    }
+    growCircle();
+    breathTextUpdate();
+  }, 12000);
 };
 
-//Start Breathing
+// Start Breathing
 start.addEventListener("click", () => {
-    start.classList.add("button-inactive");
-    instructions.innerText = "Get relaxed, and ready to begin breathing";
+  start.classList.add("button-inactive");
+  instructions.innerText = "Relajate y preparate poco a poco para ir respirando profundamente";
+  setTimeout(() => {
+    instructions.innerText = "El ejercicio de respiración está por empezar...";
     setTimeout(() => {
-        instructions.innerText = "Breathing is abput to begin...";
-        setTimeout(() => {
-            breathingApp();
-            growCircle();
-            breathTextUpdate();
-        }, 2000);
+      breathingApp();
+      growCircle();
+      breathTextUpdate();
     }, 2000);
+  }, 2000);
 });
-
